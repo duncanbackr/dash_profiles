@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  template:
+    build:
+      args:
+        - ENV=dev
+      context: .
+    container_name: app
+    environment:
+      - DEBUG=${DEBUG}
+      - FLASK_APP=${FLASK_APP}
+      - FLASK_ENV=${FLASK_ENV}
+      - FLASK_RUN_PORT=${PORT}
+      - PYTHONDONTWRITEBYTECODE=${PYTHONUNBUFFERED}
+      - PYTHONUNBUFFERED=${PYTHONUNBUFFERED}
+    image: template
+    ports:
+      - ${PORT}:${PORT}
+    volumes:
+      - .:/template
