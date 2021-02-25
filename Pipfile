@@ -4,14 +4,15 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-pytest-flask = "~=1.1"
 
 [packages]
-aiohttp = "~=3.7"
-django-environ = "~=0.4"
-flask = "~=1.1"
+pandas = "~=1.2"
+dash = "~=1.17"
 gunicorn = "~=20.0"
+dash-auth = "==1.0.0"
+python-dotenv = "~=0.15"
 google-cloud-secret-manager = "~=2.1"
+django-environ = "~=0.4"
 
 [requires]
 python_version = "3.8"
