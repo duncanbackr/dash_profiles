@@ -1,4 +1,3 @@
-import pandas as pd
 
 def add_received_response_column(df_comments_fans_videos):
   df_responses = df_comments_fans_videos[(df_comments_fans_videos['by_creator'] == True)]
