@@ -18,3 +18,5 @@ def init_dashboard(server):
     def display_value(value):
         return {'success': 'I am in the display value'} #dashboard_layout(user=value) if value else 'Select Creator'
     return dash_app.server
+
+
