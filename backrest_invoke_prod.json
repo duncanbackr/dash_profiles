@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "backr-prod",
+  "private_key_id": "d1aa2fc34d282614660de33d84c9530eb8e7cbd8",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDJ4n6ceePmA7NN\n0aaxOQ0Ee/AbBJgKlQM6aaHjx31f2CIiXJLMda+pqdkW6ItgvKaL1tFkVM92YyWB\n648WU6GT2Q+dR3MgNW4o1KiMWZplRkNxQ1YhEgxMDkyTzKKK8hl7/tYttUouR/FL\nGC9oW74NHYygDVd6iFdvkr97j427hcIxsLmVP0ZV2OAPGGKcVI2V1sORV38KYAT1\nIDso3dANU1mhSMnoiKEL2Kjj+Ee984bOBmrQQUH/Sch/0OdQG2aoZ/AAFAIRagK+\nYaZ4hGU4Sk4C45YuQEl3vYHN0xyJKFykCfe/uNBQyH5xGzzFD41sP4KQNvVmFL9Z\ntNgwAmJFAgMBAAECggEAGxQwxF9LFMKhTcpVsAbFerj/CziyBhVXsgGSL+HFrNHq\nPi6pmBgfAERidIKrk0Wqly4wtuLzUt9YnBUTA70i+phOUlvPkt3n0T05AF5Sacwj\nZrFP/66SjK8MUXTMxpNTnMChTM84zH1k3Zw4W6iWlN7GSn+PoMVh6PrHiVTHf4Pj\n/DOtMSGxoj4dBjwYFSDfDi3B7tzPMkAGbbFysUEMldjPb9R9NWgDXjcFvZHA/DAo\nZd9/Qa27nykRnNQgYLjTTmKGqjU+EGmERVFpq1P2DdvjWbuClwkfBRDvWQSkZd4I\nBw+qHL5q2cdpFBiyn/TjqmDXQ0ztvvkTS4SDXKg2nwKBgQDjsoy2oYi5I1k8CQYu\nJz3fMWMELSzuDjOCX1ywkVVARXfFTV7EAqcA6qihcuwAsoNQwMUESDiaUJM6eydr\nv8kU8/4yj/OfAaZmzRZDfIdTqIgYH1Enf4/q7n/R3ZToZgNI6eTNZVuKPvZ/woef\naRKYNzjgWR8m3LQoG8oqsWwvowKBgQDi+pIvOTtBHfIRt6uY/u0PXkxXgiQDGWgA\neX1YZMfdHjzW/BkN9A62pi2RzJgfFyuj21BOsIsV04hjTHiFoUPNBGcHuOfs5KVn\naSCqH4sLIXlXHTHS+nlEp8qoD+2rEpr7YM6JNQdUtmIRN9Y2B1uwdL7UEYx4NM+r\nkQmYNzSk9wKBgQCJMq/I58JbU+pT21gm/SwxzS9Nd+8HrfTpjI5sMdX9eR42+2yr\njLGWQs7DIV0E+otXYCAWeXHpwb1E0qopKZF/F5nGW6i+2Z6reM3+cg2UogsHBe+/\nbgSI2ZaZHPu5oKZAC/b6sCUdQt0ClHNl4Uj8AOI7hFfZ8ch4Fm6VlPyMIwKBgQCk\n4W6FvWZM1Cr/MdQGTND6A/8i5lewpKkHBznFl1gUSR3a8cBlgW+awLaDngK3Owap\nfewlbVtrnIEL2QYH1HDDIjqRwoE/dYytxRFEY6uGh2d0n7GM2AR1mgm98ewtBFPu\n3ZDK3OmZYO92IICMOOYjFXt149WNkJd2wuIcX6XvWwKBgD33I8FHuoOZ5Y5sha/Q\nTJ1TA99uqdnlS8VJilRhZQPljCTxKCxAmimXSAJPGYZa4/8jsH/VBdlhMHKRsV+y\nHD0/S+/0nob77u1WJy9I/mY6wsMExSQ5+Uar5C0wPoiSMUk2VFUliyQL0QYlgt1t\nEjJbdhmoV9fMOSuhacvxkFzT\n-----END PRIVATE KEY-----\n",
+  "client_email": "backrest-invoker@backr-prod.iam.gserviceaccount.com",
+  "client_id": "109246129812059558037",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/backrest-invoker%40backr-prod.iam.gserviceaccount.com"
+}
