@@ -1,14 +1,4 @@
-from get_data import get_videos, get_comments, get_fans
-import json 
-from get_creds import exchange_jwt_for_token, create_signed_jwt
 import pandas as pd
-
-creds = '/Users/eli/Desktop/creator_profiles_yt/backrest_invoke_prod.json' 
-f = open(creds ,) 
-credentials_json = json.load(f) 
-run_service_url = 'https://backrest-q2zw6yb3ha-uc.a.run.app'
-signed_jwt = create_signed_jwt(credentials_json, run_service_url)
-token = exchange_jwt_for_token(signed_jwt)
 
 def videos_comment_fans_df(token, platform_account_id):
     df_videos = pd.DataFrame(get_videos(token, platform_account_id))
