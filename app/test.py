@@ -12,7 +12,7 @@ from helpers.get_df import videos_comment_fans_df
 from helpers.metrics import fan_metrics
 from helpers.parser import parse_timestamp
 from datetime import datetime,timedelta
-import numpy as np
+from helpers import get_full_df
 
 creds = '/Users/eli/Desktop/creator_profiles_yt/backrest_invoke_prod.json' 
 f = open(creds ,) 
@@ -22,18 +22,6 @@ signed_jwt = create_signed_jwt(credentials_json, run_service_url)
 token = exchange_jwt_for_token(signed_jwt)
 
 
-def get_full_df(token, platform_account_id):
-    videos_comment_fans = videos_comment_fans_df(token, platform_account_id)
-    videos_comment_fans = add_cum_count_column(videos_comment_fans)
-    videos_comment_fans = add_received_response_column(videos_comment_fans)
-    videos_comment_fans = get_delays(videos_comment_fans)
-    df_fan_metrics = fan_metrics(videos_comment_fans)
-    videos_comment_fans = videos_comment_fans.merge(df_fan_metrics, on = 'account_title', how = 'left')
-    cutoff = get_cutoff(df_fan_metrics)
-    videos_comment_fans = add_label(videos_comment_fans, cutoff)
-    videos_comment_fans = add_active_label(videos_comment_fans, cutoff)
-    videos_comment_fans = parse_timestamp(videos_comment_fans)
-
-    return videos_comment_fans
-
-
+if __name__ == '__main__':
+    df = get_full_df(token, 'UCN_fKex8H7MgZiPPzRhgg0A')
+    print(df.head())

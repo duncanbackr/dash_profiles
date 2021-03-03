@@ -1,4 +1,5 @@
 import pandas as pd
+from helpers.get_data import get_comments, get_fans, get_videos
 
 def videos_comment_fans_df(token, platform_account_id):
     df_videos = pd.DataFrame(get_videos(token, platform_account_id))
