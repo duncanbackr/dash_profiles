@@ -1,4 +1,4 @@
-
+import pandas as pd
 def fan_type(x,top_fan_cutoff):
     if x == 1:
         return 'NewFan'

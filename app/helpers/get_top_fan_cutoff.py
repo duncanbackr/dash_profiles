@@ -1,3 +1,5 @@
+import pandas as pd
+import numpy as np
 
 def get_cutoff(df_fan_metrics):
     mean_num_comments = np.mean(df_fan_metrics['total_comments'])

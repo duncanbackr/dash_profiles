@@ -1,4 +1,5 @@
 from datetime import datetime,timedelta
+import pandas as pd
 
 def get_delays(df_comments_fans_videos):
     df_comments_fans_videos['timestamp'] = pd.to_datetime(df_comments_fans_videos['timestamp'])
