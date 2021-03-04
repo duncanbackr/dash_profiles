@@ -119,8 +119,9 @@ def get_agg_metrics(df_user):
 
     df_final_agg = pd.merge(df3_agg, active_fans, on = 'channel_name', how = 'outer')
     df_final_agg = df_final_agg.fillna(0)
-
+    
     fig = go.Figure(data=[go.Table(header=dict(values=['Metric Name', 'Value']),
-                    cells=dict(values=[df_final_agg.columns, df_final_agg.iloc[0]]))
-                        ])
+                 cells=dict(values=[df_final_agg.columns, df_final_agg.iloc[0]]))
+                     ])
+
     return fig.show()
