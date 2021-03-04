@@ -1,15 +1,36 @@
 import pandas as pd
-from Backrest.get_data import get_comments, get_fans, get_videos, get_creators
+from Backrest.get_data import get_resource
 
 def videos_comment_fans_df(token, platform_account_id):
-   df_videos = pd.DataFrame(get_videos(token, platform_account_id))
-   df_comments = pd.DataFrame(get_comments(token, platform_account_id))
-   df_fans = pd.DataFrame(get_fans(token, platform_account_id))
-   creator_df =pd.DataFrame(get_creators(token))
-   creator_df= creator_df[['url', 'channel_name']]
+   
+   videos = get_resource(
+      resource='/v1/youtube/videos/', 
+      params={'creator__youtube_platform_account_id': platform_account_id,
+               'limit':1000},
+      token=token,
+   )
 
-   creator_df.url = creator_df.url.str.split('/')
-   creator_df.url = creator_df.url.str[-2]
+   fans = get_resource(
+      resource='/v1/youtube/fans/', 
+      params={'creator__youtube_platform_account_id': platform_account_id,
+               'limit':1000},
+      token=token,
+   )
+
+   comments = []
+   for video in videos:
+      video_id=video['youtube_video_id']
+      video_comments = get_resource(
+         resource='/v1/youtube/comments/', 
+         params={'youtube_video__youtube_platform_video_id':video_id,
+                  'limit':1000},
+         token=token,
+      )
+      comments.extend(video_comments)
+
+   df_videos = pd.DataFrame(videos)
+   df_fans = pd.DataFrame(fans)
+   df_comments = pd.DataFrame(comments)
 
    df_comments.fan = df_comments.fan.str.split('/')
    df_comments.fan = df_comments.fan.str[-2]
@@ -46,6 +67,5 @@ def videos_comment_fans_df(token, platform_account_id):
             ]
    df_comments_fans_videos.creator = df_comments_fans_videos.creator.str.split('/')
    df_comments_fans_videos.creator = df_comments_fans_videos.creator.str[-2]
-   df_comments_fans_videos = pd.merge(df_comments_fans_videos,creator_df, left_on = 'creator', right_on = 'url', how = 'left')
 
    return df_comments_fans_videos

@@ -30,7 +30,10 @@ env.read_env(env_file)
 class Config:
     SECRET_KEY = env.str('SECRET_KEY')
     TESTING = env.bool('TESTING')
-    BACKREST_URL = env.url('BACKREST_URL')
+    BACKREST_URL = env.str('BACKREST_URL')
+    LOCAL = env.bool('LOCAL')
+    CREDENTIALS_PATH = env.str('CREDENTIALS_PATH')
+
 
 class Auth:
     VALID_PASSWORD = os.environ.get('VALID_PASSWORD')
