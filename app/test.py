@@ -15,4 +15,5 @@ token = Process.exchange_jwt_for_token(signed_jwt)
 
 if __name__ == '__main__':
     df = Process.get_full_df(token, 'UCN_fKex8H7MgZiPPzRhgg0A')
+    #print(df.columns)
     graph = get_agg_metrics(df)

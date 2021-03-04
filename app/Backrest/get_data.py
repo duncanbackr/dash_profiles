@@ -75,3 +75,14 @@ def get_fans(token, platform_account_id):
         fans.extend(results2.json()['results'])
         next = results2.json()['next']
     return fans 
+
+def get_creators(token):
+    results_creator = requests.get(
+    url = "https://backrest-q2zw6yb3ha-uc.a.run.app/v1/youtube/creators/",
+
+    headers = {
+        'Authorization': f'Bearer {token}'
+        }   
+    )
+    creator = results_creator.json()
+    return creator
