@@ -124,4 +124,4 @@ def get_agg_metrics(df_user):
                  cells=dict(values=[df_final_agg.columns, df_final_agg.iloc[0]]))
                      ])
 
-    return fig.show()
+    return fig
