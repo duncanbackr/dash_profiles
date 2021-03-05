@@ -1,12 +1,12 @@
 import pandas as pd
-from Process.add_active_label import add_active_label
-from Process.add_response import add_received_response_column
-from Process.get_delays import get_delays
-from Process.get_top_fan_cutoff import get_cutoff
-from Process.cum_count import add_cum_count_column
-from Process.add_passive_label import add_label, fan_type
-from Process.metrics import fan_metrics
-from Process.parser import parse_timestamp
+from app.Process.add_active_label import add_active_label
+from app.Process.add_response import add_received_response_column
+from app.Process.get_delays import get_delays
+from app.Process.get_top_fan_cutoff import get_cutoff
+from app.Process.cum_count import add_cum_count_column
+from app.Process.add_passive_label import add_label, fan_type
+from app.Process.metrics import fan_metrics
+from app.Process.parser import parse_timestamp
 from datetime import datetime,timedelta
 import numpy as np
 
@@ -23,12 +23,10 @@ def get_full_df(videos_comment_fans):
 
     return videos_comment_fans
 
-def get_auth_df(token, platform_account_id):
-    df = get_full_df(token, platform_account_id)
+def get_auth_df(df):
     df_auth = df[df.by_creator == True]
     return df_auth
 
-def get_df_user(token, platform_account_id):
-    df = get_full_df(token, platform_account_id)
+def get_df_user(df):
     df_user = df[df.by_creator == False]
     return df_user

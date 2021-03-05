@@ -1,22 +1,29 @@
 import dash
-import dash_auth
-from main.dropdown_layout import dropdown_layout
-# from main.dashboard import dashboard_layout
-from app.config import Auth
+import dash_core_components as dcc
+import time
+
+from app import Backrest, Process, Graphs, layout
 
 
 def init_dashboard(server):
-    dash_app = dash.Dash(
-        server=server)
-        #external_stylesheets=['https://codepen.io/chriddyp/pen/bWLwgP.css'])
-    dash_app.layout = dropdown_layout()
-    # auth = dash_auth.BasicAuth(dash_app,
-    #                             [[Auth.VALID_USERNAME, Auth.VALID_PASSWORD]])
 
-    @dash_app.callback(dash.dependencies.Output('display-value', 'children'),
-                       [dash.dependencies.Input('dropdown', 'value')])
-    def display_value(value):
-        return {'success': 'I am in the display value'} #dashboard_layout(user=value) if value else 'Select Creator'
+    dash_app = dash.Dash(server=server)
+
+    raw_data = Backrest.get_raw_data('UCGtHgazkYWXCecFs-OtJc1A')
+    df = Process.get_full_df(raw_data)
+
+    df_user = Process.get_df_user(df)
+    df_auth = Process.get_auth_df(df)
+
+    dash_app.layout = layout.generate_html(df_user, df_auth)
+    
+    @dash_app.callback(
+        dash.dependencies.Output('pie_graph', 'children'),
+        dash.dependencies.Input('pie_graph_dropdown', 'value'))
+    def pie_callback(pie_type):
+        return dcc.Graph(figure= Graphs.pie_chart.active_label(df_user, pie_type)) 
+    
     return dash_app.server
+
 
 

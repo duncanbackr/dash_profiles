@@ -1,8 +1,8 @@
 import json 
 import pandas as pd
 from datetime import datetime,timedelta
-import Process
-import Graphs
+import app.Process
+import app.Graphs
 import Backrest
 
 import dash
@@ -18,11 +18,11 @@ server = app.server
 
 raw_data = Backrest.get_raw_data('UCGtHgazkYWXCecFs-OtJc1A')
 
-df = Process.get_full_df(raw_data)
-df_user = Process.get_df_user(df)
-df_auth = Process.get_auth_df(df)
+df = app.Process.get_full_df(raw_data)
+df_user = app.Process.get_df_user(df)
+df_auth = app.Process.get_auth_df(df)
 
-app.layout = Graphs.get_layout(df_user, df_auth)
+app.layout = app.Graphs.get_layout(df_user, df_auth)
 
 if __name__ == '__main__':
     app.run_server(debug=False)
