@@ -30,14 +30,14 @@ def get_layout(df_user, df_auth):
     fig_trend = get_trend_plot(df_user)
     fig_conversion = fig_funnel_to_bar(df_user)
     fig_topfans = get_topfan_table(df_user)
-    fig_metrics2 = get_metrics_table(df_user)
+    #fig_metrics2 = get_metrics_table(df_user)
     fig_vidbar = get_video_plot(df_user)
     fig_daybar = fig_day(df_user, df_auth)
     fig_timeline1 = fig_video_timeline(df_user)
-    #fig_timeline2 = fig_video_comparison(df_user)
-    fig_activefans = activeFans_fig(df_user)
+    fig_timeline2 = fig_video_comparison(df_user)
+    #fig_activefans = activeFans_fig(df_user)
     #fig_bubble = bubble_fig(df_user)
-    #fig_time_of_day = fig_time(df_user, df_auth)
+    fig_time_of_day = fig_time(df_user)
 
     layout = html.Div(children=[
         html.H1(children='Creator Dashboards'),
@@ -48,13 +48,13 @@ def get_layout(df_user, df_auth):
             dcc.Graph(id='example-graph4',figure=fig_trend),
             dcc.Graph(id='example-graph5',figure=fig_conversion),
             dcc.Graph(id='example-graph6',figure=fig_topfans),
-            dcc.Graph(id='example-graph7',figure=fig_metrics2),
+            #dcc.Graph(id='example-graph7',figure=fig_metrics2),
             dcc.Graph(id='example-graph8',figure=fig_vidbar),
             dcc.Graph(id='example-graph9',figure=fig_daybar),
             dcc.Graph(id='example-graph10',figure=fig_timeline1),
-            #dcc.Graph(id='example-graph11',figure=fig_timeline2)
-            dcc.Graph(id='example-graph12',figure=fig_activefans)
-            #dcc.Graph(id='example-graph13',figure=fig_time_of_day)
+            dcc.Graph(id='example-graph11',figure=fig_timeline2),
+            #dcc.Graph(id='example-graph12',figure=fig_activefans)
+            dcc.Graph(id='example-graph13',figure=fig_time_of_day)
             #dcc.Graph(id='example-graph14',figure=fig_bubble)
 
         ]

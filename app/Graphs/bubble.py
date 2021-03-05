@@ -52,13 +52,15 @@ def bubble_fig(df_user):
     x = df_bubble['total_responses']
     y = df_bubble['engagment_score']
 
-    #if x is not empy
-    p = np.polyfit(x, y, 1)
-    fit_line = x*p[0] + p[1]
+    if len(x) != 0:
+        p = np.polyfit(x, y, 1)
+        fit_line = x*p[0] + p[1]
+    else:
+        fit_line = 0
 
     fig_bubble = px.scatter(df_bubble, 
-                            x=x, 
-                            y=y,
+                            x='total_responses', 
+                            y='engagment_score',
                             size="bubble_size",
                             color="video_title",
                             size_max=50,

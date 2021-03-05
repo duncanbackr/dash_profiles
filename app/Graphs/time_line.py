@@ -1,7 +1,7 @@
 import numpy as np
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
-
+import pandas as pd
 
 def df_time_user(df_user):
 
@@ -36,8 +36,9 @@ def df_time_auth(df_user):
     return df_auth_post
 
 
-def fig_time(df_fan_posts, df_auth_post):
-
+def fig_time(df_user):
+    df_fan_posts = df_time_user(df_user)
+    df_auth_post = df_time_auth(df_user)
     ############create 3 plots for each timezone##########
     df_fan_posts['hours-ON'] = np.arange(19,24).tolist()+ np.arange(0,19).tolist()
     df_auth_post['hours-ON'] = np.arange(19,24).tolist()+ np.arange(0,19).tolist()
@@ -110,7 +111,7 @@ def fig_time(df_fan_posts, df_auth_post):
     secondary_y=True,   
     )
 
-    fig.update_layout(
+    fig_time.update_layout(
         updatemenus=[
             dict(
                 buttons=list([
