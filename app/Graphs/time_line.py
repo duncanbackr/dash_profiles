@@ -110,6 +110,26 @@ def fig_time(df_fan_posts, df_auth_post):
     secondary_y=True,   
     )
 
+    fig.update_layout(
+        updatemenus=[
+            dict(
+                buttons=list([
+                    dict(label="ON TZ",
+                        method="update",
+                        args=[{"visible": [True, False, False, True, False, False]},
+                                ]),
+                    dict(label="BC TZ",
+                        method="update",
+                        args=[{"visible": [False, True, False, False, True, False]},
+                                ]),
+                    dict(label="NS TZ",
+                        method="update",
+                        args=[{"visible": [False, False, True, False, False, True]},
+                                ]),
+                ]),
+            )
+        ])
+
 
     fig_time.update_layout(
     title_text="Comments Posted by Hour of the Day", xaxis = dict(
