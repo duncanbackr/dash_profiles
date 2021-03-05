@@ -22,13 +22,3 @@ def get_full_df(videos_comment_fans):
     videos_comment_fans = parse_timestamp(videos_comment_fans)
 
     return videos_comment_fans
-
-def get_auth_df(token, platform_account_id):
-    df = get_full_df(token, platform_account_id)
-    df_auth = df[df.by_creator == True]
-    return df_auth
-
-def get_df_user(token, platform_account_id):
-    df = get_full_df(token, platform_account_id)
-    df_user = df[df.by_creator == False]
-    return df_user

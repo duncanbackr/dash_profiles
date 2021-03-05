@@ -52,6 +52,7 @@ def bubble_fig(df_user):
     x = df_bubble['total_responses']
     y = df_bubble['engagment_score']
 
+    #if x is not empy
     p = np.polyfit(x, y, 1)
     fit_line = x*p[0] + p[1]
 

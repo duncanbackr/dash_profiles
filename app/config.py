@@ -26,7 +26,6 @@ if not os.path.isfile('.env'):
 env = environ.Env()
 env.read_env(env_file)
 
-
 class Config:
     SECRET_KEY = env.str('SECRET_KEY')
     TESTING = env.bool('TESTING')
