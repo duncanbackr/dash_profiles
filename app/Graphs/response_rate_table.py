@@ -1,6 +1,16 @@
 import plotly.graph_objects as go
 
 def get_metrics_table(df_user):
+
+
+    def get_response_rate(df_user, label):
+        df_top = df_user[df_user.active_label == label]
+        num_top_fans = len(df_top['account_title'].unique())
+        top_fan_list = list(df_top['account_title'].unique())
+
+
+
+
     df_top = df_user[df_user.active_label == 'topFan']
     num_top_fans = len(df_top['account_title'].unique())
 
@@ -48,7 +58,7 @@ def get_metrics_table(df_user):
                                     'Trending Fan Response Rate', 'New Fan Response Rate'], 
                         [str(round(num_comments_top_fans/num_top_fans, 2)), str(round(num_comments_top_fans/num_comments_total, 4) * 100) + '%',  
                                     str(num_new_fans)+': '+str(num_trend_fans)+': '+str(num_top_fans) + ': '+str(num_re_fans), 
-                                            str(round(top_fans_received_response_whenever/num_top_fans, 4) * 100) + '%', str(round(trend_fans_received_response_whenever/num_trend_fans, 4) * 100) + '%',
+                                            str(round(top_fans_received_response_whenever/num_top_fans, 4) * 100) + '%', str(round(trend_fans_received_response_while_trend_fan/num_trend_fans, 4) * 100) + '%',
                                                     str(round(new_fans_received_response/num_new_fans, 4) * 100) + '%']]))
                         ])
     return fig

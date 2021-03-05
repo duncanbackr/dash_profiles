@@ -37,3 +37,4 @@ class Config:
 class Auth:
     VALID_PASSWORD = os.environ.get('VALID_PASSWORD')
     VALID_USERNAME = os.environ.get('VALID_USERNAME')
+
