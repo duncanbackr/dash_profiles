@@ -25,6 +25,14 @@ def init_dashboard(server):
         dash.dependencies.Input('pie_graph_dropdown', 'value'))
     def pie_callback(cutoff_days):
         return dcc.Graph(figure= Graphs.pie_chart.active_label(df_user, cutoff_days)) 
+
+    @dash_app.callback(
+        dash.dependencies.Output('funnel_graph', 'children'),
+        dash.dependencies.Input('funnel_graph_checklist', 'value'))
+    def funnel_callback(callback_data):
+        return dcc.Graph(
+            figure=Graphs.funnel.get_funnel(df_user, callback_data)
+        ) 
     
     return dash_app.server
 

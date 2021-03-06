@@ -11,7 +11,8 @@ def generate_html(df_user, df_auth):
         html.H1('Creator Dashboard'),
 
         # First pie graph with date range dropdown
-        html.H4('Date Range'),
+        html.H2('Fan badge vs total comments'),
+        html.H4('Date Range', style={'textAlign': 'left'}),
         html.Div([
             dcc.Dropdown(
                 id='pie_graph_dropdown',
@@ -22,15 +23,33 @@ def generate_html(df_user, df_auth):
                     {'label': 'Last twelve months', 'value': 365}],
                 value=None),
             ],
-            style={"width": "50%"},
+            style={'width': '500px'}
         ),
         html.Div(id='pie_graph'),
 
-        # Static funnel Graph
-        dcc.Graph(figure=Graphs.funnel.get_funnel(df_user))
+        # Interactive funnel Graph
+        html.H2('Fan conversion rates'),
+        html.Div([
+            html.Label('Creator Responses'),
+            dcc.Checklist(
+                id='funnel_graph_checklist',
+                options=[
+                    {'label': 'First comment', 'value': 'first'},
+                    {'label': 'Trending comment', 'value': 'trend'},
+                ],
+                value=[])
+            ],
+            style={'textAlign': 'center', 'width':'450px'}
+        ),
+        html.Div(
+        html.Div(
+            id='funnel_graph', 
+            style={'width':'450px'}
+        ),
+        style={'display': 'flex', 'margin-right':'auto', 'margin-left': 'auto'}
+        ),
+    ],
 
-        ],
-
-        style={'padding-left': "30vh", 'padding-right': "30vh"}
+    style={'padding-left': "30vh", 'padding-right': "30vh"}
     )
     return layout
