@@ -1,12 +1,12 @@
-from flask import Flask, config
+from flask import Flask
 from config import Config
 
 def create_app():
-    app = Flask(__name__)
-    app.config.from_object(Config)
-
-    with app.app_context():
+    flask_app = Flask(__name__)
+    flask_app.config.from_object(Config)
+    
+    with flask_app.app_context():
         from app.dashboard import init_dashboard
-        app = init_dashboard(app)
+        dash_app = init_dashboard(flask_app)
 
-    return app
+    return dash_app
