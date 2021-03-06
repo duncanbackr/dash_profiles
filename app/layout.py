@@ -6,23 +6,24 @@ from app import Graphs
 
 def generate_html(df_user, df_auth):
 
-    # fig_pie = get_active_label_pie(df_user)
-    # fig_funnel = get_funnel(df_user)
-    # fig_bubble = bubble_fig(df_user)
-    # fig_time_of_day = fig_time(df_user, df_auth)
-
     layout = html.Div([
 
         html.H1('Creator Dashboard'),
 
-        # First pie graph with dropdown
-        dcc.Dropdown(
-            id='pie_graph_dropdown',
-            options=[
-                {'label': 'Fans', 'value': 'fans'},
-                {'label': 'Comments', 'value': 'comments'}, 
-                {'label': 'Both', 'value': 'both'}],
-            value='Fans'),
+        # First pie graph with date range dropdown
+        html.H4('Date Range'),
+        html.Div([
+            dcc.Dropdown(
+                id='pie_graph_dropdown',
+                options=[
+                    {'label': 'All Time', 'value': None},
+                    {'label': 'Last two weeks', 'value': 14}, 
+                    {'label': 'Last two months', 'value': 60},
+                    {'label': 'Last twelve months', 'value': 365}],
+                value=None),
+            ],
+            style={"width": "50%"},
+        ),
         html.Div(id='pie_graph'),
 
         # Static funnel Graph
