@@ -1,16 +1,20 @@
 import pandas as pd
+import os
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-def get_funnel(df_fans, callback_data):
+def get_funnel(callback_data):
 
-    df_fans['newfan_response'] = (df_fans.passive_label == 'NewFan') & (df_fans.received_response == True)
-    df_fans['trend_fan'] = (df_fans.passive_label == 'TrendFan')
-    df_fans['trend_response'] = (df_fans.passive_label == 'TrendFan') & (df_fans.received_response == True)
-    df_fans['top_fan'] = (df_fans.passive_label == 'TopFan')
+    full_df = pd.read_csv(os.getcwd() + '/full_df.csv')
+    df_user = full_df[full_df.by_creator == False]
+
+    df_user['newfan_response'] = (df_user.passive_label == 'NewFan') & (df_user.received_response == True)
+    df_user['trend_fan'] = (df_user.passive_label == 'TrendFan')
+    df_user['trend_response'] = (df_user.passive_label == 'TrendFan') & (df_user.received_response == True)
+    df_user['top_fan'] = (df_user.passive_label == 'TopFan')
 
     ### group by fan and agregate each column ###
-    fan_funnel = df_fans.groupby('fan_id').agg(
+    fan_funnel = df_user.groupby('fan_id').agg(
             {
                 'newfan_response':'sum',
                 'trend_fan':'sum',

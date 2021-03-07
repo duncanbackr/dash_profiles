@@ -5,6 +5,8 @@ backr-dev-*.json
 backr-prod-*.json
 backrest_invoke_prod.json
 backrest_invoke_dev.json
+*.csv
+.env
 
 
 # Created by .ignore support plugin (hsz.mobi)

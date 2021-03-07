@@ -4,11 +4,12 @@ import dash_html_components as html
 
 from app import Graphs
 
-def generate_html(df_user, df_auth):
+def generate_html(channel_name):
 
     layout = html.Div([
 
-        html.H1('Creator Dashboard'),
+        html.H1(f'{channel_name} Creator Dashboard'),
+        dcc.Link('return to home page', href='/'),
 
         # First pie graph with date range dropdown
         html.H2('Fan badge vs total comments'),
@@ -52,4 +53,5 @@ def generate_html(df_user, df_auth):
 
     style={'padding-left': "30vh", 'padding-right': "30vh"}
     )
+    
     return layout

@@ -4,7 +4,7 @@ import environ
 
 BASE_DIR = cwd = os.getcwd()
 env_file = os.path.join(BASE_DIR, ".env")
-SETTINGS_NAME = "template"
+SETTINGS_NAME = "creator-profiles"
 
 if not os.path.isfile('.env'):
     import google.auth

@@ -1,8 +1,12 @@
 import pandas as pd
+import os
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-def active_label(df_user, cutoff_days=None):
+def active_label(cutoff_days=None):
+
+  full_df = pd.read_csv(os.getcwd() + '/full_df.csv')
+  df_user = full_df[full_df.by_creator == False]
 
   df_user.active_label = df_user.active_label.fillna('other')
 
@@ -51,7 +55,7 @@ def active_label(df_user, cutoff_days=None):
             direction ='clockwise',
             sort=False),
       row=1, col=2)
-  
+
   fig.update_layout(
     title_text="Fan and Comment Distributions")
 
