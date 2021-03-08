@@ -1,5 +1,5 @@
 import pandas as pd
-from Backrest.get_data import get_resource
+from app.Backrest.get_data import get_resource
 
 def videos_comment_fans_df(token, platform_account_id):
    

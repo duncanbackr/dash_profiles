@@ -1,40 +1,62 @@
 import pandas as pd
+import os
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
-def get_active_label_pie(df_fans):
+def active_label(cutoff_days=None):
 
-  df_fans_labels = df_fans.drop_duplicates(['active_label','fan_id'],keep= 'first')
+  full_df = pd.read_csv(os.getcwd() + '/full_df.csv')
+  df_user = full_df[full_df.by_creator == False]
 
-  num_fans = len(df_fans_labels)
-  trend_fans = len(df_fans_labels[df_fans_labels.active_label == 'trendingFan'])
-  new_fans = len(df_fans_labels[df_fans_labels.active_label == 'newFan'])
-  top_fans = len(df_fans_labels[df_fans_labels.active_label == 'topFan'])
-  re_fans = len(df_fans_labels[df_fans_labels.active_label == 'reEngageFan'])
-  nan_fans = len(df_fans_labels[df_fans_labels.active_label.isnull()])
+  df_user.active_label = df_user.active_label.fillna('other')
 
-  top_fans_com = sum(df_fans.active_label == 'topFan')
-  trend_fans_com = sum(df_fans.active_label== 'trendingFan')
-  new_fans_com = sum(df_fans.active_label == 'newFan')
-  re_fans_com = sum(df_fans.active_label == 'reEngageFan')
-  nan_fans_com = sum(df_fans.active_label.isnull())
+  if cutoff_days:
+    cutoff_date = pd.datetime.now() - pd.Timedelta(days=cutoff_days)
+    df_user = df_user[pd.to_datetime(df_user.timestamp) > cutoff_date]
 
+  pie_data = pd.DataFrame(index=['topFan', 'newFan', 'other', 'trendingFan', 'reEngageFan'])
 
-  labels = ['topFan', 'trendingFan', 'newFan', 'reEngageFan', 'Other']
+  pie_data['Fans'] = (df_user
+                .groupby('fan_id')
+                .active_label
+                .first()
+                .value_counts(dropna=False)
+  )
 
-  # Create subplots: use 'domain' type for Pie subplot
-  fig = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}]])
-  fig.add_trace(go.Pie(labels=labels, values=[top_fans, trend_fans, new_fans, re_fans,nan_fans ], pull=[0.2, 0,0], name="Fan %"),
-              1, 1)
-  fig.add_trace(go.Pie(labels=labels, values=[top_fans_com, trend_fans_com, new_fans_com, re_fans_com, nan_fans_com], pull=[0.2, 0,0], name="Comment %"),
-              1, 2)
+  pie_data['Comments'] = (df_user
+                .active_label
+                .value_counts(dropna=False)
+  )
 
-  # Use `hole` to create a donut-like pie chart
-  fig.update_traces(hole=.4, hoverinfo="label+percent+name")
+  fig = make_subplots(rows=1, cols=2,
+                      subplot_titles=("Fans", "Comments"),
+                      specs=[[{'type':'domain'}, {'type':'domain'}]])
+  fig.add_trace(
+      go.Pie(labels=pie_data.index, 
+            values=pie_data['Fans'], 
+            pull=[0.15, 0, 0, 0, 0], 
+            name="Fan %", 
+            hole=.4,
+            direction ='clockwise',
+            sort=False),
+    row=1, col=1)
+
+  fig.add_trace(
+      go.Pie(labels=pie_data.index, 
+            values=pie_data['Comments'],
+            marker={'colors': ['#2143AF', 
+                                '#6161dc', 
+                                '#6f6f6f', 
+                                '#196984', 
+                                '#193384']},
+            pull=[0.15, 0, 0, 0, 0], 
+            name="Comment %", 
+            hole=.4,
+            direction ='clockwise',
+            sort=False),
+      row=1, col=2)
 
   fig.update_layout(
-      title_text="Fan and Comment Distributions (Active Badge)",
-      # Add annotations in the center of the donut pies.
-      annotations=[dict(text='Fans', x=0.18, y=0.5, font_size=20, showarrow=False),
-                  dict(text='Comments', x=0.85, y=0.5, font_size=15, showarrow=False)])
+    title_text="Fan and Comment Distributions")
+
   return fig

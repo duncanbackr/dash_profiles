@@ -11,7 +11,6 @@ def get_metrics_table(df_user):
     num_comments_top_fans = len(df_user[df_user.account_title.isin(top_fan_list)])
     num_comments_total = len(df_user)
 
-
     df_trend = df_user[(df_user.active_label == 'trendingFan') & ~(df_user.account_title.isin(top_fan_list))]
     trend_fan_list = list(df_trend['account_title'].unique())
     num_trend_fans = len(df_trend['account_title'].unique())
