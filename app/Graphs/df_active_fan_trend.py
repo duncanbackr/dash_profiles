@@ -6,7 +6,7 @@ from plotly.subplots import make_subplots
 def activeFans_fig(df_user):
 
     # Fans Dataframe
-    df_fans = df_user[['id', 'dates', 'account_title', 'by_creator', 'parent_youtube_comment_id']]
+    df_fans = df_user[['id', 'dates', 'account_title', 'by_creator', 'parent_comment_id', 'timestamp']]
     df_fans = df_fans.loc[df_fans.by_creator == False]
 
     # Create Daily active Fans table
@@ -14,7 +14,7 @@ def activeFans_fig(df_user):
     date_index = pd.date_range(start=min_date, end=pd.datetime.now(), freq='D')
     active_fans = pd.DataFrame(index=date_index)
     active_fans['daily_active'] = df_fans.groupby('dates')['account_title'].nunique()
-    active_fans['daily_responses'] = df_fans.groupby('dates')['parent_youtube_comment_id'].nunique()
+    active_fans['daily_responses'] = df_fans.groupby('dates')['parent_comment_id'].nunique()
     active_fans.fillna(0, inplace=True)
 
     # Calculate rolling sums
@@ -25,7 +25,8 @@ def activeFans_fig(df_user):
     active_fans['monthly_avg'] = active_fans['monthly_active'].ewm(com=4).mean() # Exponentially waited mean
     active_fans['monthly_responses_avg'] = active_fans['monthly_responses'].ewm(com=4).mean()
     # Video posts dataframe
-    video_post_dates = df_user.upload_timestamp.unique().date
+    df_user.upload_timestamp = pd.to_datetime(df_user.upload_timestamp)
+    video_post_dates = pd.to_datetime(df_user.upload_timestamp.unique()).strftime('%Y-%m-%d')
     active_fans['video_posted'] = False
     active_fans.loc[video_post_dates, 'video_posted'] = True
     video_posts_df = active_fans.loc[active_fans.video_posted].reset_index()

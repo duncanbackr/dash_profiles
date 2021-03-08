@@ -54,7 +54,7 @@ def init_dashboard(server):
             full_df = Process.get_full_df(raw_data)
             full_df.to_csv(os.getcwd() + '/full_df.csv', index=False)
 
-            return layout.generate_html(path_elements[1])
+            return layout.generate_html(channel_name=path_elements[1])
         else:
             return home.dropdown_layout()
     # You could also return a 404 "URL not found" page here

@@ -1,17 +1,19 @@
 
 import plotly.graph_objects as go
+import pandas as pd 
 
 def create_video_comparison(df_user):
     df_video_comparison = df_user[['by_creator', 'video_title', 'timestamp', 'upload_timestamp']]
 
+
     # Calculate diff between video timestamp and comment timestamp as Timedelta and fraction
-    df_video_comparison['time_delta'] = df_video_comparison.timestamp - df_video_comparison.upload_timestamp
+    df_video_comparison['time_delta'] = df_video_comparison.timestamp - pd.to_datetime(df_video_comparison.upload_timestamp).dt.tz_localize(None)
     df_video_comparison['time_delta_fraction'] = df_video_comparison.time_delta.apply(lambda x: x.days + x.seconds/86400)
 
     # Remove time deltas that are negative (caused as a result of time zone errors)
     df_video_comparison = df_video_comparison.loc[( 0 < df_video_comparison.time_delta_fraction ) & ( df_video_comparison.time_delta_fraction < 30)]
 
-    # Sort and find Cumulative Sum
+    # # Sort and find Cumulative Sum
     df_video_comparison.sort_values('time_delta', inplace=True)
     df_video_comparison['cumsum'] = 1
     df_video_comparison['cumsum'] = df_video_comparison.groupby('video_title')['cumsum'].cumsum()

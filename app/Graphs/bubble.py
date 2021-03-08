@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 
-
 def create_bubble_data(df_user):
 
     # Calculate the agregations
@@ -34,7 +33,7 @@ def create_bubble_data(df_user):
                     )
     df_bubble = pd.DataFrame(index=titles_sorted).join(df_bubble)
     df_bubble = df_bubble.reset_index().rename(columns={'index':'video_title'})
-    df_bubble = df_bubble[df_bubble['total_responses'] > 0]
+    #df_bubble = df_bubble[df_bubble['total_responses'] > 0]
     df_bubble = df_bubble.sort_values(by=['total_responses'])
     #df_bubble['Response:Comments Ratio'] = df_bubble['total_responses']/df_bubble['total_comments']
 
@@ -48,16 +47,21 @@ def bubble_fig(df_user):
 
     df_bubble = create_bubble_data(df_user)
 
-    c = np.mean(df_bubble['engagment_score'])/ np.mean(df_bubble['total_responses'])
+    if np.mean(df_bubble['total_responses']) > 0:
+      c = np.mean(df_bubble['engagment_score'])/ np.mean(df_bubble['total_responses'])
+    else: c = 0
     x = df_bubble['total_responses']
     y = df_bubble['engagment_score']
 
-    p = np.polyfit(x, y, 1)
-    fit_line = x*p[0] + p[1]
+    # if c > 0:
+    #   p = np.polyfit(x, y, 1)
+    #   fit_line = x*p[0] + p[1]
+    # else:
+    #   fit_line = 0
 
     fig_bubble = px.scatter(df_bubble, 
-                            x=x, 
-                            y=y,
+                            x='total_responses', 
+                            y='engagment_score',
                             size="bubble_size",
                             color="video_title",
                             size_max=50,
@@ -71,8 +75,8 @@ def bubble_fig(df_user):
                             title="Responses Vs Engagement Rate, bubble size is total video comments"
                             )
 
-    fig2 = px.line(x=x, y=fit_line)
-    fig_bubble.append_trace(fig2.data[0],None,None)
+    #fig2 = px.line(x=x, y=fit_line)
+    #fig_bubble.append_trace(fig2.data[0],None,None)
     fig_bubble.update_xaxes(showticklabels=True)
     fig_bubble.update_yaxes(showticklabels=False)
     fig_bubble.update_xaxes(showgrid=False, zeroline=False)
