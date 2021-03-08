@@ -36,6 +36,6 @@ class Config:
     CREDENTIALS_PATH = env.str('CREDENTIALS_PATH')
 
 
-class Auth:
-    VALID_PASSWORD = env.str('VALID_PASSWORD')
-    VALID_USERNAME = env.str('VALID_USERNAME')
+# class Auth:
+#     VALID_PASSWORD = env.str('VALID_PASSWORD')
+#     VALID_USERNAME = env.str('VALID_USERNAME')
