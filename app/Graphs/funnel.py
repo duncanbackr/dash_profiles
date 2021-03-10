@@ -8,10 +8,10 @@ def get_funnel(callback_data):
     full_df = pd.read_csv(os.getcwd() + '/full_df.csv')
     df_user = full_df[full_df.by_creator == False]
 
-    df_user['newfan_response'] = (df_user.passive_label == 'NewFan') & (df_user.received_response == True)
-    df_user['trend_fan'] = (df_user.passive_label == 'TrendFan')
-    df_user['trend_response'] = (df_user.passive_label == 'TrendFan') & (df_user.received_response == True)
-    df_user['top_fan'] = (df_user.passive_label == 'TopFan')
+    df_user['newfan_response'] = (df_user.static_badge == 'newFan') & (df_user.received_response == True)
+    df_user['trend_fan'] = (df_user.static_badge == 'trendingFan')
+    df_user['trend_response'] = (df_user.static_badge == 'trendingFan') & (df_user.received_response == True)
+    df_user['top_fan'] = (df_user.static_badge == 'topFan')
 
     ### group by fan and agregate each column ###
     fan_funnel = df_user.groupby('fan_id').agg(

@@ -12,7 +12,7 @@ def add_cum_count(df):
     """
 
     df.sort_values('timestamp', inplace=True)
-    df.loc['cum_count'] = 1
+    df['cum_count'] = 1
     cum_count = df.groupby('fan_id')['cum_count'].cumsum()
     return cum_count
 

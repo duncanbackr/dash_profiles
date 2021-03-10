@@ -9,7 +9,7 @@ from config import Config
 def dropdown_layout():
 
     token = Backrest.authentication.get_token(Config.BACKREST_URL)
-    users = Backrest.get_data.get_resource(resource='/v1/youtube/creators', params={}, token=token)
+    users = Backrest.request.get_resource(resource='/v1/youtube/creators', params={}, token=token)
     
     layout = html.Div(
         [
