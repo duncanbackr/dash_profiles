@@ -43,11 +43,30 @@ def generate_html(channel_name):
             style={'textAlign': 'center', 'width':'450px'}
         ),
         html.Div(
-        html.Div(
-            id='funnel_graph', 
-            style={'width':'450px'}
+            html.Div(
+                id='funnel_graph', 
+                style={'width':'450px'}
+            ),
+            style={'display': 'flex', 'margin-right':'auto', 'margin-left': 'auto'}
         ),
-        style={'display': 'flex', 'margin-right':'auto', 'margin-left': 'auto'}
+
+        # Interactive sankey Graph
+        html.H2('Fan conversion pipeline'),
+        html.Div([
+            html.Label('Creator Responses'),
+            dcc.Checklist(
+                id='sankey_graph_checklist',
+                options=[
+                    {'label': 'Hide Newfans with no response', 'value': 'first'},
+                    {'label': 'Hide trendingFans with no response', 'value': 'trend'},
+                ],
+                value=[])
+            ],
+        ),
+        html.Div(
+            html.Div(
+                id='sankey_graph', 
+            ),
         ),
     ],
 

@@ -5,7 +5,7 @@ from plotly.subplots import make_subplots
 
 def get_funnel(callback_data):
 
-    full_df = pd.read_csv(os.getcwd() + '/full_df.csv')
+    full_df = pd.read_csv('full_df.csv')
     df_user = full_df[full_df.by_creator == False]
 
     df_user['newfan_response'] = (df_user.static_badge == 'newFan') & (df_user.received_response == True)

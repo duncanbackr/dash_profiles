@@ -38,6 +38,14 @@ def init_dashboard(server):
     def funnel_callback(checkbox_data):
         return dcc.Graph(
             figure=Graphs.funnel.get_funnel(checkbox_data)
+        )
+
+    @dash_app.callback(
+        dash.dependencies.Output('sankey_graph', 'children'),
+        dash.dependencies.Input('sankey_graph_checklist', 'value'))
+    def sankey_callback(checkbox_data):
+        return dcc.Graph(
+            figure=Graphs.sankey.get_sankey(checkbox_data)
         ) 
 
     """ Set the routing """
@@ -52,7 +60,7 @@ def init_dashboard(server):
             # Save data
             raw_data = Backrest.get_raw_data(path_elements[2])
             full_df = Process.get_full_df(raw_data)
-            full_df.to_csv(os.getcwd() + '/full_df.csv', index=False)
+            full_df.to_csv('full_df.csv', index=False)
 
             return layout.generate_html(channel_name=path_elements[1])
         else:

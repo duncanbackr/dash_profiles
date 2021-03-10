@@ -5,7 +5,7 @@ from plotly.subplots import make_subplots
 
 def active_label(cutoff_days=None):
 
-  full_df = pd.read_csv(os.getcwd() + '/full_df.csv')
+  full_df = pd.read_csv('full_df.csv')
   df_user = full_df[full_df.by_creator == False]
 
   df_user.active_badge = df_user.active_badge.fillna('other')
