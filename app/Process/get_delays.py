@@ -1,7 +1,19 @@
-from datetime import datetime,timedelta
+from datetime import datetime, timezone
 import pandas as pd
 
+def delay_1(df):
+    """ 
+    Calculates delay between todays date and comment date in units of days
+    """
+    
+    now_utc = pd.Timestamp.utcnow()
+    delay1 = (now_utc - df['timestamp']).dt.days + (now_utc - df['timestamp']).dt.seconds/3600
+    return delay1
+
+
 def get_delays(df_comments_fans_videos):
+
+
     df_comments_fans_videos['timestamp'] = pd.to_datetime(df_comments_fans_videos['timestamp'])
     df_sec_date = df_comments_fans_videos.groupby('fan_id')['timestamp'].apply(lambda x: x.nsmallest(2)).rename({'timestamp':'second_date'})
 

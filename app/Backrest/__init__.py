@@ -80,7 +80,7 @@ def get_raw_data(youtube_channel_id:str):
         })
     )
 
-    columns = ['id', 'by_creator', 'backr_reply', 'parent_comment_id', # Comment info
+    columns = ['id', 'by_creator', 'backr_reply', 'parent_comment_id', 'timestamp', # Comment info
                'video_id', 'video_title', 'upload_timestamp', 'video_views', 'video_likes', # Video info
                'fan_id', 'account_title' # Fan info
                ]

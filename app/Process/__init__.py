@@ -1,24 +1,19 @@
 import pandas as pd
-from app.Process.add_active_label import add_active_label
-from app.Process.add_response import add_received_response_column
-from app.Process.get_delays import get_delays
-from app.Process.get_top_fan_cutoff import get_cutoff
-from app.Process.cum_count import add_cum_count_column
-from app.Process.add_passive_label import add_label, fan_type
-from app.Process.metrics import fan_metrics
-from app.Process.parser import parse_timestamp
-from datetime import datetime,timedelta
-import numpy as np
 
-def get_full_df(videos_comment_fans):
-    videos_comment_fans = add_cum_count_column(videos_comment_fans)
-    videos_comment_fans = add_received_response_column(videos_comment_fans)
-    videos_comment_fans = get_delays(videos_comment_fans)
-    df_fan_metrics = fan_metrics(videos_comment_fans)
-    videos_comment_fans = videos_comment_fans.merge(df_fan_metrics, on = 'account_title', how = 'left')
-    cutoff = get_cutoff(df_fan_metrics)
-    videos_comment_fans = add_label(videos_comment_fans, cutoff)
-    videos_comment_fans = add_active_label(videos_comment_fans, cutoff)
-    videos_comment_fans = parse_timestamp(videos_comment_fans)
+from app.Process import features, badges
 
-    return videos_comment_fans
+def get_full_df(df):
+    
+    # Set datetimes
+    df['timestamp'] = pd.to_datetime(df['timestamp'])
+    df['upload_timestamp'] = pd.to_datetime(df.upload_timestamp)
+
+    # Create custom features
+    df['cum_count'] = features.add_cum_count(df[['id', 'timestamp', 'fan_id']])
+    df['received_response'] = features.add_received_response(df[['id', 'by_creator', 'parent_comment_id']])
+
+    # Add fan labels
+    df['static_label'] = badges.add_static_badge(df[['id', 'fan_id', 'cum_count']])
+    df['active_label'] = badges.add_active_badge(df[['id', 'fan_id', 'timestamp']])
+
+    return df
