@@ -1,9 +1,10 @@
 import requests
-from config import Config
 import time
 import json
 import jwt
 import urllib
+
+from config import Config
 
 def get_token(target_service):
 
