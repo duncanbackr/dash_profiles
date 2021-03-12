@@ -50,6 +50,14 @@ def generate_html(channel_name):
             style={'display': 'flex', 'margin-right':'auto', 'margin-left': 'auto'}
         ),
 
+        # Fan Conversion bars
+        html.H2('Fan conversion bar graph'),
+        html.Div(
+            dcc.Graph(
+                figure=Graphs.fan_conversion.bar_graph()
+            ) 
+        ),
+
         # Interactive sankey Graph
         html.H2('Fan conversion pipeline'),
         html.Div([
