@@ -58,6 +58,17 @@ def init_dashboard(server):
         )
 
     @dash_app.callback(
+        dash.dependencies.Output('response_table', 'children'),
+        dash.dependencies.Input('url', 'pathname'),
+        dash.dependencies.Input('response_table_dropdown', 'value'))
+    def response_table_callback(pathname, badge):
+        if not os.path.exists('full_df.csv'):
+            _ = pull_data(pathname)
+        return dcc.Graph(
+            figure=Graphs.data_tables.creator_response_table(active_badge=badge)
+        )
+
+    @dash_app.callback(
         dash.dependencies.Output('sankey_graph', 'children'),
         dash.dependencies.Input('url', 'pathname'),
         dash.dependencies.Input('sankey_graph_checklist', 'value'))

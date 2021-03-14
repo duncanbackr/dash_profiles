@@ -58,6 +58,24 @@ def generate_html(channel_name):
             ) 
         ),
 
+        # First pie graph with date range dropdown
+        html.H2('Creator response and comment stats'),
+        html.H4('Active label', style={'textAlign': 'left'}),
+        html.Div([
+            dcc.Dropdown(
+                id='response_table_dropdown',
+                options=[
+                    {'label': 'All fans', 'value': None},
+                    {'label': 'topFans', 'value': 'topFan'}, 
+                    {'label': 'newFans', 'value': 'newFan'},
+                    {'label': 'trendingFan', 'value': 'trendingFan'}],
+                value=None),
+            ],
+            style={'width': '500px'}
+        ),
+        html.Div(id='response_table'),
+
+
         # Interactive sankey Graph
         html.H2('Fan conversion pipeline'),
         html.Div([
