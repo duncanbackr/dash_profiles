@@ -3,6 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import pandas as pd
 import os
+import time
 
 from app import Backrest, Process, Graphs, layout, home
 
@@ -75,6 +76,7 @@ def init_dashboard(server):
         if pathname != '/':
             
             channel_name = pull_data(pathname)
+            time.sleep(0.5) # so that callbacks can find data
 
             return layout.generate_html(channel_name)
         else:
