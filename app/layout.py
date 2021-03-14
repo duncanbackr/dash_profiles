@@ -58,7 +58,7 @@ def generate_html(channel_name):
             ) 
         ),
 
-        # First pie graph with date range dropdown
+        # creator response table
         html.H2('Creator response and comment stats'),
         html.H4('Active label', style={'textAlign': 'left'}),
         html.Div([
@@ -75,6 +75,14 @@ def generate_html(channel_name):
         ),
         html.Div(id='response_table'),
 
+
+        # top fan table
+        html.H2('top fan response table'),
+        html.Div(
+            dcc.Graph(
+                figure=Graphs.data_tables.top_fan_table()
+            ) 
+        ),
 
         # Interactive sankey Graph
         html.H2('Fan conversion pipeline'),

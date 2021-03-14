@@ -61,3 +61,39 @@ def creator_response_table(active_badge=None):
                 align='left'))
     ])
     return fig
+
+def top_fan_table():
+
+    full_df = pd.read_csv('full_df.csv')
+    full_df.timestamp = pd.to_datetime(full_df.timestamp)
+
+    full_df['is_root'] = full_df.parent_comment_id.isna()
+    top_fans = (
+        full_df.groupby('fan_id').agg({
+            'account_title': 'first',
+            'id': 'count',
+            'is_root': 'sum',
+            'received_response': 'sum',
+            'timestamp': 'max'
+        })
+        .rename(columns={
+            'id': 'Total Engagements',
+            'is_root': 'Total root Comments',
+            'received_response': 'Total creator responses',
+            'timestamp': 'Last comment date'
+        })
+        .sort_values('Total Engagements', ascending=False)
+        [0:10]
+    )
+
+    top_fans['Last comment date'] = top_fans['Last comment date'].apply(lambda x: x.date())
+    
+    fig = go.Figure(data=[go.Table(
+        header=dict(values=list(top_fans.columns),
+                    fill_color='paleturquoise',
+                    align='left'),
+        cells=dict(values=[top_fans[col] for col in top_fans.columns],
+                fill_color='lavender',
+                align='left'))
+    ])
+    return fig
