@@ -1,13 +1,20 @@
 import pandas as pd
 import plotly.graph_objects as go
 
-def fig_day(df_user, df_auth):
+def get_figure():
+
+    full_df = pd.read_csv('full_df.csv')
+    df_user = full_df[full_df.by_creator == False]
+    df_auth = full_df[full_df.by_creator == True]
 
 
-    # Create ordered Data Frame
-    df_days = pd.DataFrame(index=['Sun', 'Mon', 'Tues', 'Wed','Thurs', 'Fri', 'Sat'])
+    # Create ordered Data Frame]
+    day_dict = {6:'Sun', 0:'Mon', 1:'Tues', 2:'Wed', 3:'Thurs', 4:'Fri', 5:'Sat'}
+    df_days = pd.DataFrame(index=day_dict.values())
 
     # Fill values for total and creator comments
+    df_user['day'] = df_user.timestamp.apply(lambda x: day_dict[x.weekday()])
+    df_auth['day'] = df_auth.timestamp.apply(lambda x: day_dict[x.weekday()])
     df_days['total_comments'] = df_user.groupby('day')["video_title"].count()
     df_days['creator_comments'] = df_auth.groupby('day')["video_title"].count()
     df_days.fillna(0, inplace=True)

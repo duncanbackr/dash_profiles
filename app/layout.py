@@ -84,6 +84,22 @@ def generate_html(channel_name):
             ) 
         ),
 
+        # video bar graph
+        html.H2('top fan comments per video'),
+        html.Div(
+            dcc.Graph(
+                figure=Graphs.video_bar.get_video_plot()
+            ) 
+        ),
+
+        # day bar graph
+        html.H2('Creator responses vs fan comments by weekday'),
+        html.Div(
+            dcc.Graph(
+                figure=Graphs.day_bar.get_figure()
+            ) 
+        ),
+
         # Interactive sankey Graph
         html.H2('Fan conversion pipeline'),
         html.Div([

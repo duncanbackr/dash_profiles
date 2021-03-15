@@ -2,60 +2,53 @@ import pandas as pd
 import plotly.graph_objects as go
 import numpy as np
 
-def get_video_plot(df_user):
+def get_video_plot():
 
-    df_bar = df_user[['id', 'video_like_count','video_view_count','video_title', 'active_label', 'upload_timestamp']]
+    full_df = pd.read_csv('full_df.csv')
+    df_user = full_df[full_df.by_creator == False]
+    
+    df_user['topFan'] = df_user["active_badge"] == 'topFan'
 
-    # top fans boolean
-    df_bar['fan_type_bool'] = df_bar["active_label"].replace({
-                                                        np.NaN:False,
-                                                        'newFan':False,
-                                                        'topFan':True,
-                                                        'trendingFan':False,
-                                                        'reEngageFan':False
-                                                        })
-
-    Option2 = (df_bar
+    df_bar = (df_user
             .groupby(['video_title'])
             .agg({
                 'id':'count',
-                'video_like_count':'first',
-                'video_view_count':'first',
+                'video_likes':'first',
+                'video_views':'first',
                 'upload_timestamp':'first',
-                'fan_type_bool':'sum'
+                'topFan':'sum'
                 }
-                )
+            )
             .rename(columns={
-                            'id':'total_comments',
-                            'fan_type_bool':'top_fan_comments'
+                            'id':'total_comments'
                             }
                     )
             )
 
     # # Calculate other metrics
-    Option2['top_fan_percentage'] = round(100*Option2['top_fan_comments'] / Option2['total_comments'], 1)
-    Option2['top_fan_percentage_string'] = Option2['top_fan_percentage'].apply(lambda x: str(x) + '%')
-    Option2['other_comments'] = Option2['total_comments'] - Option2['top_fan_comments']
+    df_bar['top_fan_percentage'] = round(100*df_bar['topFan'] / df_bar['total_comments'], 1)
+    df_bar['top_fan_percentage_string'] = df_bar['top_fan_percentage'].apply(lambda x: str(x) + '%')
+    df_bar['other_comments'] = df_bar['total_comments'] - df_bar['topFan']
 
     # # Sort vids and grab first 15
-    Option2.sort_values(['upload_timestamp','total_comments'], ascending=False, inplace=True)
-    Option2.reset_index(inplace=True)
-    Option2 = Option2[0:15]
+    df_bar.sort_values(['upload_timestamp','total_comments'], ascending=False, inplace=True)
+    df_bar.reset_index(inplace=True)
+    df_bar = df_bar[0:15]
 
     # # Create list of colors for the labels
-    avg_top_fan_rate = Option2['top_fan_percentage'].median()
-    color_list = ['green' if x >= avg_top_fan_rate else 'crimson' for x in Option2['top_fan_percentage']]
+    avg_top_fan_rate = df_bar['top_fan_percentage'].median()
+    color_list = ['green' if x >= avg_top_fan_rate else 'crimson' for x in df_bar['top_fan_percentage']]
 
     fig = go.Figure(data=[
         go.Bar(
             name='Other Fans',
-            x=Option2.video_title,
-            y=Option2.other_comments),
+            x=df_bar.video_title,
+            y=df_bar.other_comments),
         go.Bar(
             name='Top Fans',
-            x=Option2.video_title,
-            y=Option2.top_fan_comments,
-            text=Option2.top_fan_percentage_string,
+            x=df_bar.video_title,
+            y=df_bar.topFan,
+            text=df_bar.top_fan_percentage_string,
             textposition='outside',
             marker= {'color':'lightblue'},
             textfont=dict(
