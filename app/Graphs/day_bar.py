@@ -4,6 +4,7 @@ import plotly.graph_objects as go
 def get_figure():
 
     full_df = pd.read_csv('full_df.csv')
+    full_df.timestamp = pd.to_datetime(full_df.timestamp)
     df_user = full_df[full_df.by_creator == False]
     df_auth = full_df[full_df.by_creator == True]
 

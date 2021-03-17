@@ -75,7 +75,6 @@ def generate_html(channel_name):
         ),
         html.Div(id='response_table'),
 
-
         # top fan table
         html.H2('top fan response table'),
         html.Div(
