@@ -33,8 +33,8 @@ def bar_graph():
 
     # Seccond bar groupings
     all_trend_top = quotiant(sum(fan_funnel['top_fan']), sum(fan_funnel['trend_fan']))
-    no_trend_top = quotiant(sum(~fan_funnel['trend_response'] & fan_funnel['top_fan']), sum(~fan_funnel['trend_response']))
-    yes_trend_top = quotiant(sum(fan_funnel['trend_response'] & fan_funnel['top_fan']), sum(fan_funnel['trend_response']))
+    no_trend_top = quotiant(sum(~fan_funnel['trend_response'] & fan_funnel['top_fan']), sum(~fan_funnel['trend_response'] & fan_funnel['trend_fan']))
+    yes_trend_top = quotiant(sum(fan_funnel['trend_response'] & fan_funnel['top_fan']), sum(fan_funnel['trend_response'] & fan_funnel['trend_fan']))
 
     # Rounding values
     no_response_y = [round(x*100, 1) for x in [no_first_trend, no_trend_top]]
