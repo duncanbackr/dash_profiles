@@ -19,7 +19,7 @@ def get_resource(resource:str,
 
     data.extend(results.json()['results'])
     next = results.json()['next']
-    while next:
+    while (next) and (len(data) < 250000):
         results = requests.get(
             url = next,
             headers = {

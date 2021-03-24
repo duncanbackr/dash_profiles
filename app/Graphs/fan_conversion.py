@@ -1,6 +1,11 @@
 import pandas as pd
 import plotly.graph_objects as go
 
+def quotiant(numinator, denominator):
+    if denominator == 0:
+        return 0
+    return numinator / denominator
+
 def bar_graph():
 
     full_df = pd.read_csv('full_df.csv')
@@ -22,14 +27,14 @@ def bar_graph():
         ).astype(bool)
 
     # First bar groupings
-    all_first_trend = sum(fan_funnel['trend_fan'])/len(fan_funnel)
-    no_first_trend = sum(~fan_funnel['newfan_response'] & fan_funnel['trend_fan'])/sum(~fan_funnel['newfan_response'])
-    yes_first_trend = sum(fan_funnel['newfan_response'] & fan_funnel['trend_fan'])/sum(fan_funnel['newfan_response'])
+    all_first_trend = quotiant(sum(fan_funnel['trend_fan']), len(fan_funnel))
+    no_first_trend = quotiant(sum(~fan_funnel['newfan_response'] & fan_funnel['trend_fan']), sum(~fan_funnel['newfan_response']))
+    yes_first_trend = quotiant(sum(fan_funnel['newfan_response'] & fan_funnel['trend_fan']), sum(fan_funnel['newfan_response']))
 
     # Seccond bar groupings
-    all_trend_top = sum(fan_funnel['top_fan'])/sum(fan_funnel['trend_fan'])
-    no_trend_top = sum(~fan_funnel['trend_response'] & fan_funnel['top_fan'])/sum(~fan_funnel['trend_response'])
-    yes_trend_top = sum(fan_funnel['trend_response'] & fan_funnel['top_fan'])/sum(fan_funnel['trend_response'])
+    all_trend_top = quotiant(sum(fan_funnel['top_fan']), sum(fan_funnel['trend_fan']))
+    no_trend_top = quotiant(sum(~fan_funnel['trend_response'] & fan_funnel['top_fan']), sum(~fan_funnel['trend_response']))
+    yes_trend_top = quotiant(sum(fan_funnel['trend_response'] & fan_funnel['top_fan']), sum(fan_funnel['trend_response']))
 
     # Rounding values
     no_response_y = [round(x*100, 1) for x in [no_first_trend, no_trend_top]]
