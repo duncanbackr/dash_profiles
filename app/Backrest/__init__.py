@@ -46,7 +46,7 @@ def get_raw_data(youtube_channel_id:str):
         request.get_resource(
             resource='/v1/youtube/comments/',
             params={'youtube_video__creator__youtube_platform_account_id': youtube_channel_id,
-                'limit':15000},
+                'limit':10000},
             token=token,
         )
     )
